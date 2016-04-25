@@ -27,4 +27,3 @@ initialGenotype =
   , smoothness = Allele.heterozygous Trait.smoothness
   , flowerColor = Allele.heterozygous Trait.flowerColor
   }
-

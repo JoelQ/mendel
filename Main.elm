@@ -1,9 +1,21 @@
 import Html exposing(..)
-import Organism exposing (Phenotype)
+import Organism exposing (Genotype, Phenotype, initialGenotype)
+import Random.Organism
+
+import Random
+
+initialSeed : Random.Seed
+initialSeed = Random.initialSeed 1234567890
+
+offspring : Genotype
+offspring =
+  let generator = Random.Organism.cross initialGenotype initialGenotype
+  in
+     Random.generate generator initialSeed |> fst
 
 main : Html
 main =
-  view (Organism.phenotype Organism.initialGenotype)
+  view (Organism.phenotype offspring)
 
 view : Phenotype -> Html
 view phenotype =
