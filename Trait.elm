@@ -26,4 +26,3 @@ smoothness =
 flowerColor : Trait FlowerColor
 flowerColor =
   Trait White Violet
-

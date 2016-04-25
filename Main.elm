@@ -8,6 +8,19 @@ type alias Genotype =
   , flowerColor : Allele FlowerColor
   }
 
+type alias Phenotype =
+  { podColor : PodColor
+  , smoothness : Smoothness
+  , flowerColor : FlowerColor
+  }
+
+phenotype : Genotype -> Phenotype
+phenotype genotype =
+  { podColor = Allele.phenotype genotype.podColor
+  , smoothness = Allele.phenotype genotype.smoothness
+  , flowerColor = Allele.phenotype genotype.flowerColor
+  }
+
 initialGenotype : Genotype
 initialGenotype =
   { podColor = Allele.heterozygous Trait.podColor
@@ -17,25 +30,15 @@ initialGenotype =
 
 main : Html
 main =
-  view initialGenotype
+  view (phenotype initialGenotype)
 
-view : Genotype -> Html
-view genetype =
+view : Phenotype -> Html
+view phenotype =
   dl []
     [ dt [] [ text "Pod Color"]
-    , dd [] [ viewAllele genetype.podColor ]
+    , dd [] [ text (toString phenotype.podColor) ]
     , dt [] [ text "Smoothness"]
-    , dd [] [ viewAllele genetype.smoothness ]
+    , dd [] [ text (toString phenotype.smoothness) ]
     , dt [] [ text "Flower Color"]
-    , dd [] [ viewAllele genetype.flowerColor ]
+    , dd [] [ text (toString phenotype.flowerColor) ]
     ]
-
-viewAllele : Allele a -> Html
-viewAllele (maternal, paternal) =
-  span [] [ text <| (viewGene maternal) ++ ", " ++ (viewGene paternal) ]
-
-viewGene : Gene a -> String
-viewGene gene =
-  case gene of
-    Dominant g -> (toString g) ++ " (dominant)"
-    Recessive g -> toString g
